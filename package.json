@@ -1,0 +1,19 @@
+{
+  "name": "luxe-beauty",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Modern full-stack salon platform for nails and hair.",
+  "author": "Lemuel Owusu Ansah",
+  "license": "MIT",
+  "packageManager": "pnpm@12.5.1",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "pnpm -r --parallel dev",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test"
+  }
+}

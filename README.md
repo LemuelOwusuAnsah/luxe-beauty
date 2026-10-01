@@ -89,7 +89,7 @@ luxe-beauty/
 
 ---
 
-## Local development
+## Local development (developers only)
 
     pnpm install
     pnpm dev

@@ -1,0 +1,25 @@
+{
+  "name": "@luxe-beauty/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "lint": "echo \"no lint\" && exit 0",
+    "typecheck": "tsc --noEmit",
+    "test": "echo \"no tests yet\" && exit 0"
+  },
+  "dependencies": {
+    "@luxe-beauty/db": "workspace:*",
+    "@neondatabase/serverless": "^0.10.4",
+    "drizzle-orm": "^0.44.7",
+    "hono": "^4.9.11"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20251001.0",
+    "@types/node": "^24.19.0",
+    "typescript": "^6.0.3",
+    "wrangler": "^4.144.0"
+  }
+}

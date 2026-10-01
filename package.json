@@ -19,5 +19,12 @@
   "devDependencies": {
     "neonctl": "^7.0.1",
     "wrangler": "^4.144.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "drizzle-orm": "0.44.7",
+      "@neondatabase/serverless": "0.10.4",
+      "@types/pg": "8.23.1"
+    }
   }
 }

@@ -8,3 +8,7 @@ ENVIRONMENT = "production"
 
 [observability]
 enabled = true
+
+routes = [
+  { pattern = "api-luxe.lemuelowusuansah.org", custom_domain = true }
+]

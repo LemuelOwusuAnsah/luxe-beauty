@@ -58,11 +58,6 @@ export default function Layout() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    setOpen(false)
-    setMenuOpen(false)
-  }, [location.pathname])
-
-  useEffect(() => {
     function onClick(e: MouseEvent) {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
         setMenuOpen(false)

@@ -19,3 +19,5 @@ test-results/
 *.tsbuildinfo
 .vscode/
 .idea/
+packages/db/.env
+.neon

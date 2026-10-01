@@ -1,0 +1,30 @@
+{
+  "name": "@luxe-beauty/db",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "generate": "drizzle-kit generate",
+    "migrate": "tsx src/migrate.ts",
+    "seed": "tsx src/seed.ts",
+    "studio": "drizzle-kit studio",
+    "lint": "echo \"no lint\" && exit 0",
+    "typecheck": "tsc --noEmit",
+    "test": "echo \"no tests yet\" && exit 0"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^0.10.4",
+    "dotenv": "^17.2.3",
+    "drizzle-orm": "^0.44.7"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.3",
+    "@types/pg": "^8.23.1",
+    "drizzle-kit": "^0.31.6",
+    "pg": "^8.23.0",
+    "tsx": "^4.20.7",
+    "typescript": "^6.0.3"
+  }
+}

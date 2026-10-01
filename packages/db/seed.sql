@@ -1,0 +1,19 @@
+INSERT INTO services (slug, name, tagline, description, long_description, price_from, duration, image, highlights)
+VALUES
+('nail-art', 'Nail Art & Design', 'Classic manicures to statement nail art', 'Precision shaping, cuticle care, and long-wear finishes tailored to your style.', 'Our nail studio blends classic manicure technique with modern art.', 45.00, 60, 'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=1200', ARRAY['Gel, acrylic, and builder gel','Hand-painted custom art','Chrome, ombre, and French finishes','Nail health and strengthening care']),
+('hair-styling', 'Hair Styling', 'Cuts and styles shaped around you', 'Wash, cut, blowout, and finish.', 'From everyday blowouts to event styling.', 65.00, 75, 'https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1200', ARRAY['Precision cuts for all textures','Blowouts and event styling','Silk press and smoothing','Home care routine coaching']),
+('hair-coloring', 'Hair Coloring', 'Color that suits your tone and lifestyle', 'Full color, highlights, balayage, and gloss.', 'Color mapping session before every appointment.', 120.00, 150, 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=1200', ARRAY['Full color and root touch-ups','Highlights and balayage','Custom gloss and toners','Bond-building treatment included']),
+('spa-treatments', 'Spa Treatments', 'Restorative body and hair therapies', 'Deep conditioning, scalp therapy, and relaxation.', 'Scalp therapy paired with full-body relaxation.', 85.00, 90, 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=1200', ARRAY['Scalp and hair conditioning therapy','Full-body relaxation massage','Aromatherapy add-ons','60 / 90 / 120 minute options']),
+('facials', 'Facials', 'Skin treatments for real results', 'Deep cleanse, exfoliation, masks, and hydration.', 'Built around your skin, not a fixed menu.', 75.00, 60, 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=1200', ARRAY['Personal skin analysis','Deep cleanse and exfoliation','Hydration and mask therapy','Add-on LED and peel options']),
+('waxing', 'Waxing', 'Clean, careful, and quick', 'Face, underarm, leg, and full-body waxing.', 'Gentle, low-temperature wax formulas.', 25.00, 30, 'https://images.unsplash.com/photo-1552693673-1bf958298935?w=1200', ARRAY['Face, underarm, and leg waxing','Full-body packages','Sensitive-skin formulas','Single-use applicators'])
+ON CONFLICT (slug) DO NOTHING;
+
+INSERT INTO products (slug, name, category, price, description, long_description, image, stock)
+VALUES
+('argan-oil-treatment', 'Argan Oil Treatment', 'hair', 18.50, 'Deep conditioning for damaged hair.', 'Fast-absorbing argan treatment.', 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800', 25),
+('sulfate-free-shampoo', 'Sulfate-Free Shampoo', 'hair', 22.00, 'Gentle daily cleanse for color-treated hair.', 'Cleanses without stripping color.', 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800', 40),
+('nail-polish-set', 'Nail Polish Set', 'nails', 24.99, 'Twelve trending colors, chip-resistant formula.', 'High-pigment, chip-resistant polishes.', 'https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=800', 30),
+('manicure-kit', 'Manicure Kit', 'nails', 32.99, 'Professional fifteen-piece nail care kit.', 'Stainless steel tools for at-home nail care.', 'https://images.unsplash.com/photo-1610992015732-2449b76344bc?w=800', 15),
+('hydrating-face-cream', 'Hydrating Face Cream', 'skin', 28.75, '24-hour moisture with SPF 30.', 'Locks in moisture for 24 hours.', 'https://images.unsplash.com/photo-1591085686350-798c0f9faa7f?w=800', 35),
+('gentle-cleanser', 'Gentle Cleanser', 'skin', 19.50, 'Soap-free daily cleanser for sensitive skin.', 'Removes makeup without disrupting skin barrier.', 'https://images.unsplash.com/photo-1612817288484-6f916006741a?w=800', 50)
+ON CONFLICT (slug) DO NOTHING;

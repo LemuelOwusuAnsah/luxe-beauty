@@ -1,15 +1,17 @@
 import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import { seo } from '../lib/seo'
-import { services } from '../data/services'
-import { products } from '../data/products'
+import { useServices, useProducts } from '../lib/queries'
 import { site } from '../data/site'
 import { useReveal } from '../lib/useReveal'
 
 export default function Home() {
   useReveal()
-  const featured = services.slice(0, 3)
-  const shopFeatured = products.slice(0, 4)
+  const { data: services } = useServices()
+  const { data: products } = useProducts()
+
+  const featured = services?.slice(0, 3) ?? []
+  const shopFeatured = products?.slice(0, 4) ?? []
 
   return (
     <>
@@ -85,7 +87,7 @@ export default function Home() {
                   {s.description}
                 </p>
                 <p className="mt-3 text-[var(--color-primary)] font-semibold">
-                  From ${s.priceFrom}
+                  From ${Number(s.priceFrom).toFixed(0)}
                 </p>
               </div>
             </Link>
@@ -125,7 +127,7 @@ export default function Home() {
                 <div className="p-4">
                   <h3 className="font-medium text-sm">{p.name}</h3>
                   <p className="mt-2 text-[var(--color-primary)] font-semibold">
-                    ${p.price.toFixed(2)}
+                    ${Number(p.price).toFixed(2)}
                   </p>
                 </div>
               </Link>

@@ -1,19 +1,27 @@
 import { Helmet } from 'react-helmet-async'
 import { Link, useParams } from 'react-router-dom'
 import { seo } from '../lib/seo'
-import { products } from '../data/products'
+import { useProduct } from '../lib/queries'
 import { useCart } from '../lib/cart'
 
 export default function ProductDetail() {
   const { slug } = useParams()
-  const product = products.find((p) => p.slug === slug)
+  const { data: product, isLoading, error } = useProduct(slug)
   const add = useCart((s) => s.add)
 
-  if (!product) {
+  if (isLoading) {
+    return (
+      <section className="max-w-3xl mx-auto px-5 py-24 text-center">
+        <p className="text-neutral-600 dark:text-neutral-300">Loading…</p>
+      </section>
+    )
+  }
+
+  if (error || !product) {
     return (
       <section className="max-w-3xl mx-auto px-5 py-24 text-center">
         <h1 className="text-3xl font-semibold">Product not found</h1>
-        <p className="mt-3 text-neutral-600">
+        <p className="mt-3 text-neutral-700 dark:text-neutral-300">
           This product does not exist in our catalog.
         </p>
         <Link
@@ -37,7 +45,7 @@ export default function ProductDetail() {
       />
 
       <section className="max-w-6xl mx-auto px-5 pt-10 pb-20">
-        <nav className="text-sm text-neutral-500 mb-6">
+        <nav className="text-sm text-neutral-600 dark:text-neutral-400 mb-6">
           <Link to="/shop" className="hover:text-[var(--color-primary)]">
             Shop
           </Link>
@@ -47,34 +55,43 @@ export default function ProductDetail() {
 
         <div className="grid gap-10 md:grid-cols-2">
           <div
-            className="rounded-2xl h-96 bg-cover bg-center border border-neutral-200"
+            className="rounded-2xl h-96 bg-cover bg-center border border-neutral-200 dark:border-neutral-800"
             style={{ backgroundImage: `url('${product.image}')` }}
           />
 
           <div>
-            <div className="text-xs uppercase text-neutral-500">
+            <div className="text-xs uppercase text-neutral-600 dark:text-neutral-400">
               {product.category}
             </div>
             <h1 className="text-3xl font-semibold mt-2">{product.name}</h1>
             <p className="text-[var(--color-primary)] text-2xl font-semibold mt-3">
-              ${product.price.toFixed(2)}
+              ${Number(product.price).toFixed(2)}
             </p>
-            <p className="text-neutral-600 mt-5">{product.longDescription}</p>
+            <p className="text-neutral-700 dark:text-neutral-300 mt-5">
+              {product.longDescription}
+            </p>
 
-            <div className="mt-6 text-sm text-neutral-500">
+            <div className="mt-6 text-sm text-neutral-600 dark:text-neutral-400">
               {product.stock} in stock
             </div>
 
             <div className="mt-8 flex flex-wrap gap-3">
               <button
-                onClick={() => add(product)}
+                onClick={() =>
+                  add({
+                    slug: product.slug,
+                    name: product.name,
+                    price: Number(product.price),
+                    image: product.image,
+                  })
+                }
                 className="px-6 py-3 rounded-lg bg-[var(--color-primary)] text-white font-medium hover:bg-[var(--color-primary-dark)]"
               >
                 Add to cart
               </button>
               <Link
                 to="/cart"
-                className="px-6 py-3 rounded-lg border border-neutral-200 font-medium hover:border-[var(--color-primary)]"
+                className="px-6 py-3 rounded-lg border border-neutral-200 dark:border-neutral-800 font-medium hover:border-[var(--color-primary)]"
               >
                 View cart
               </Link>

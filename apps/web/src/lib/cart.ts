@@ -1,6 +1,12 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import type { Product } from '../data/products'
+
+export type CartProduct = {
+  slug: string
+  name: string
+  price: number
+  image: string
+}
 
 export type CartItem = {
   slug: string
@@ -12,7 +18,7 @@ export type CartItem = {
 
 type CartState = {
   items: CartItem[]
-  add: (p: Product, qty?: number) => void
+  add: (p: CartProduct, qty?: number) => void
   remove: (slug: string) => void
   setQty: (slug: string, qty: number) => void
   clear: () => void
@@ -37,20 +43,12 @@ export const useCart = create<CartState>()(
           return {
             items: [
               ...state.items,
-              {
-                slug: p.slug,
-                name: p.name,
-                price: p.price,
-                image: p.image,
-                qty,
-              },
+              { slug: p.slug, name: p.name, price: p.price, image: p.image, qty },
             ],
           }
         }),
       remove: (slug) =>
-        set((state) => ({
-          items: state.items.filter((i) => i.slug !== slug),
-        })),
+        set((state) => ({ items: state.items.filter((i) => i.slug !== slug) })),
       setQty: (slug, qty) =>
         set((state) => ({
           items: state.items
@@ -58,8 +56,7 @@ export const useCart = create<CartState>()(
             .filter((i) => i.qty > 0),
         })),
       clear: () => set({ items: [] }),
-      total: () =>
-        get().items.reduce((sum, i) => sum + i.price * i.qty, 0),
+      total: () => get().items.reduce((sum, i) => sum + i.price * i.qty, 0),
       count: () => get().items.reduce((sum, i) => sum + i.qty, 0),
     }),
     { name: 'luxe-beauty-cart' },

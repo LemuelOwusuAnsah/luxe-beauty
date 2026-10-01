@@ -2,6 +2,8 @@
 
 A modern full-stack salon platform for nails and hair — services, bookings, shop, cart, and checkout.
 
+**Live demo:** https://luxe-beauty.pages.dev
+**Writeup:** https://lemuelowusuansah.github.io/luxe-beauty/
 **Built by Lemy** · [facebook.com/lemuelowusuansah](https://www.facebook.com/lemuelowusuansah)
 
 ---

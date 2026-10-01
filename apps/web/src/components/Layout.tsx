@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { site } from '../data/site'
 import { useTheme } from '../lib/theme'
 import { useCart } from '../lib/cart'
@@ -56,6 +56,25 @@ function IconMoon() {
   )
 }
 
+function IconMail() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+      <polyline points="22,6 12,13 2,6" />
+    </svg>
+  )
+}
+
+function IconLogout() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+      <polyline points="16 17 21 12 16 7" />
+      <line x1="21" y1="12" x2="9" y2="12" />
+    </svg>
+  )
+}
+
 function IconUser() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -72,7 +91,6 @@ export default function Layout() {
   const [open, setOpen] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement | null>(null)
-  const location = useLocation()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -85,8 +103,6 @@ export default function Layout() {
     return () => document.removeEventListener('mousedown', onClick)
   }, [])
 
-  const isActive = (to: string) =>
-    to === '/' ? location.pathname === '/' : location.pathname.startsWith(to)
 
   return (
     <div className="min-h-full flex flex-col">
@@ -119,8 +135,8 @@ export default function Layout() {
           <div className="flex items-center gap-2">
             <button
               onClick={toggle}
-              aria-label="Toggle theme"
-              className="w-9 h-9 flex items-center justify-center text-neutral-800 dark:text-neutral-200 hover:text-[var(--color-primary)] transition"
+              aria-label="Toggle theme" data-hide-mobile="1"
+              className="hidden lg:flex w-9 h-9 items-center justify-center text-neutral-800 dark:text-neutral-200 hover:text-[var(--color-primary)] transition"
             >
               {theme === 'dark' ? <IconSun /> : <IconMoon />}
             </button>
@@ -128,7 +144,7 @@ export default function Layout() {
             <Link
               to="/cart"
               aria-label="Cart"
-              className="relative w-9 h-9 flex items-center justify-center text-neutral-800 dark:text-neutral-200 hover:text-[var(--color-primary)] transition"
+              className="relative hidden lg:flex w-9 h-9 items-center justify-center text-neutral-800 dark:text-neutral-200 hover:text-[var(--color-primary)] transition"
             >
               <IconCart />
               {cartCount > 0 && (
@@ -141,7 +157,7 @@ export default function Layout() {
             <Link
               to="/book"
               aria-label="Book"
-              className="w-9 h-9 flex items-center justify-center text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] transition"
+              className="hidden lg:flex w-9 h-9 items-center justify-center text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] transition"
             >
               <IconPhone />
             </Link>
@@ -186,7 +202,7 @@ export default function Layout() {
               <Link
                 to="/auth"
                 aria-label="Sign in"
-                className="hidden sm:flex w-9 h-9 items-center justify-center text-neutral-800 dark:text-neutral-200 hover:text-[var(--color-primary)] transition"
+                className="hidden lg:flex w-9 h-9 items-center justify-center text-neutral-800 dark:text-neutral-200 hover:text-[var(--color-primary)] transition"
               >
                 <IconUser />
               </Link>
@@ -206,88 +222,45 @@ export default function Layout() {
           <div className="lg:hidden border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#0f1115]">
             <div className="max-w-6xl mx-auto px-5 py-4 flex flex-col gap-1">
               {nav.map((item) => (
-                <Link
-                  key={item.to}
-                  to={item.to}
-                  className={`px-3 py-3 rounded-lg text-sm font-medium ${
-                    isActive(item.to)
-                      ? 'text-[var(--color-primary)] bg-neutral-100 dark:bg-neutral-900'
-                      : 'text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-900'
-                  }`}
-                >
+                <Link key={item.to} to={item.to} onClick={close} className="px-3 py-3 rounded-lg text-sm font-medium text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-900">
                   {item.label}
                 </Link>
               ))}
 
               <div className="h-px bg-neutral-200 dark:bg-neutral-800 my-2" />
 
-              <Link
-                to="/cart"
-                className="px-3 py-3 rounded-lg text-sm font-medium text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-900"
-              >
-                Cart{cartCount > 0 ? ` (${cartCount})` : ''}
-              </Link>
-              <Link
-                to="/book"
-                className="px-3 py-3 rounded-lg text-sm font-medium text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-900"
-              >
-                Book
-              </Link>
-              <Link
-                to="/checkout"
-                className="px-3 py-3 rounded-lg text-sm font-medium text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-900"
-              >
-                Checkout
-              </Link>
-              <Link
-                to="/colophon"
-                className="px-3 py-3 rounded-lg text-sm font-medium text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-900"
-              >
-                Colophon
+              <Link to="/cart" onClick={close} className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-900">
+                <IconCart />
+                <span>Cart{cartCount > 0 ? ` (${cartCount})` : ""}</span>
               </Link>
 
-              <div className="h-px bg-neutral-200 dark:bg-neutral-800 my-2" />
+              <button onClick={toggle} className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-900 text-left">
+                {theme === "dark" ? <IconSun /> : <IconMoon />}
+                <span>{theme === "dark" ? "Light mode" : "Dark mode"}</span>
+              </button>
+
+              <Link to="/contact" onClick={close} className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-900">
+                <IconMail />
+                <span>Contact</span>
+              </Link>
 
               {current ? (
                 <>
-                  <Link
-                    to="/admin"
-                    className="px-3 py-3 rounded-lg text-sm font-medium text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-900"
-                  >
-                    Admin
+                  <Link to="/admin" onClick={close} className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-900">
+                    <IconUser />
+                    <span>Admin</span>
                   </Link>
-                  <button
-                    onClick={() => {
-                      signout()
-                      navigate('/')
-                    }}
-                    className="text-left px-3 py-3 rounded-lg text-sm font-medium border border-neutral-300 dark:border-neutral-700 text-neutral-800 dark:text-neutral-200"
-                  >
-                    Sign out
+                  <button onClick={() => { signout(); close(); navigate("/") }} className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-900 text-left">
+                    <IconLogout />
+                    <span>Sign out</span>
                   </button>
                 </>
               ) : (
-                <Link
-                  to="/auth"
-                  className="px-3 py-3 rounded-lg text-sm font-medium bg-[var(--color-primary)] text-white text-center"
-                >
-                  Sign in / Sign up
+                <Link to="/auth" onClick={close} className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium bg-[var(--color-primary)] text-white">
+                  <IconUser />
+                  <span>Sign in</span>
                 </Link>
               )}
-
-              <div className="flex flex-wrap gap-2 mt-3">
-                {socials.map((s) => (
-                  <a
-                    key={s.label}
-                    href={s.href}
-                    target={s.href.startsWith('http') ? '_blank' : undefined}
-                    rel={s.href.startsWith('http') ? 'noreferrer' : undefined}
-                    className="text-xs px-2 py-1 rounded-md border border-neutral-300 dark:border-neutral-700 text-neutral-800 dark:text-neutral-200"
-                  >
-                    {s.label}
-                  </a>
-                ))}
-              </div>
             </div>
           </div>
         )}

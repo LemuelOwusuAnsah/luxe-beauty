@@ -17,6 +17,7 @@
     "test": "pnpm -r test"
   },
   "devDependencies": {
+    "neonctl": "^7.0.1",
     "wrangler": "^4.144.0"
   }
 }

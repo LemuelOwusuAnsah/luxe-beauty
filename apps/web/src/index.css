@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-primary: #ff66b2;
+  --color-primary-dark: #ff3399;
+  --color-secondary: #3399cc;
+  --radius-card: 12px;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: #ffffff;
+  color: #111111;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.dark body {
+  background: #0f1115;
+  color: #ffffff;
+}
+
+/* Force every "muted/soft gray" utility to render bright in dark mode */
+.dark .text-neutral-400,
+.dark .text-neutral-500,
+.dark .text-neutral-600,
+.dark .text-neutral-700,
+.dark .text-neutral-800,
+.dark .text-neutral-900,
+.dark .text-muted,
+.dark .text-soft,
+.dark .text-gray-400,
+.dark .text-gray-500,
+.dark .text-gray-600,
+.dark .text-gray-700 {
+  color: #ffffff !important;
+}
+
+/* Light mode: keep muted text readable (not too pale) */
+.text-neutral-400,
+.text-neutral-500,
+.text-neutral-600 {
+  color: #4b5563;
+}
+
+.text-neutral-700 {
+  color: #374151;
+}
+
+.text-muted {
+  color: #4b5563;
+}
+
+.text-soft {
+  color: #374151;
+}
+
+input,
+select,
+textarea {
+  color: #111111;
+  background-color: #ffffff;
+  border-color: #e5e7eb;
+}
+
+.dark input,
+.dark select,
+.dark textarea {
+  color: #ffffff;
+  background-color: #16181d;
+  border-color: #2a2d34;
+}
+
+select option {
+  color: #111111;
+  background-color: #ffffff;
+}
+
+.dark select option {
+  color: #ffffff;
+  background-color: #16181d;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #6b7280;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #9ca3af;
+}

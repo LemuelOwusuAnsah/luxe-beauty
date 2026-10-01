@@ -4,8 +4,10 @@ import { seo } from '../lib/seo'
 import { services } from '../data/services'
 import { products } from '../data/products'
 import { site } from '../data/site'
+import { useReveal } from '../lib/useReveal'
 
 export default function Home() {
+  useReveal()
   const featured = services.slice(0, 3)
   const shopFeatured = products.slice(0, 4)
 
@@ -34,13 +36,13 @@ export default function Home() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 to="/book"
-                className="px-6 py-3 rounded-lg bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] font-medium"
+                className="px-6 py-3 rounded-lg bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] font-medium transition"
               >
                 Book Appointment
               </Link>
               <Link
                 to="/services"
-                className="px-6 py-3 rounded-lg border border-white/40 hover:border-white font-medium"
+                className="px-6 py-3 rounded-lg border border-white/40 hover:border-white font-medium transition"
               >
                 View Services
               </Link>
@@ -50,26 +52,28 @@ export default function Home() {
       </section>
 
       <section className="max-w-6xl mx-auto px-5 py-16">
-        <div className="flex items-end justify-between mb-8">
+        <div className="flex items-end justify-between mb-8" data-reveal>
           <div>
             <h2 className="text-3xl font-semibold">Featured services</h2>
-            <p className="text-neutral-600 dark:text-neutral-400 mt-1">
+            <p className="text-neutral-700 dark:text-neutral-300 mt-1">
               A quick look at what we do best.
             </p>
           </div>
           <Link
             to="/services"
-            className="text-sm underline text-neutral-600 dark:text-neutral-400"
+            className="text-sm underline text-neutral-700 dark:text-neutral-300"
           >
             All services
           </Link>
         </div>
         <div className="grid gap-6 md:grid-cols-3">
-          {featured.map((s) => (
+          {featured.map((s, i) => (
             <Link
               key={s.slug}
               to={`/services/${s.slug}`}
-              className="group rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-800 hover:border-[var(--color-primary)] transition"
+              data-reveal
+              style={{ ['--i' as string]: i }}
+              className="group card-lift rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-800 hover:border-[var(--color-primary)] bg-white dark:bg-neutral-900"
             >
               <div
                 className="h-48 bg-cover bg-center"
@@ -77,7 +81,7 @@ export default function Home() {
               />
               <div className="p-5">
                 <h3 className="font-semibold text-lg">{s.name}</h3>
-                <p className="text-neutral-600 dark:text-neutral-400 text-sm mt-1">
+                <p className="text-neutral-700 dark:text-neutral-300 text-sm mt-1">
                   {s.description}
                 </p>
                 <p className="mt-3 text-[var(--color-primary)] font-semibold">
@@ -91,26 +95,28 @@ export default function Home() {
 
       <section className="bg-neutral-50 dark:bg-neutral-900/40 py-16">
         <div className="max-w-6xl mx-auto px-5">
-          <div className="flex items-end justify-between mb-8">
+          <div className="flex items-end justify-between mb-8" data-reveal>
             <div>
               <h2 className="text-3xl font-semibold">Shop favorites</h2>
-              <p className="text-neutral-600 dark:text-neutral-400 mt-1">
+              <p className="text-neutral-700 dark:text-neutral-300 mt-1">
                 Take the salon home with you.
               </p>
             </div>
             <Link
               to="/shop"
-              className="text-sm underline text-neutral-600 dark:text-neutral-400"
+              className="text-sm underline text-neutral-700 dark:text-neutral-300"
             >
               All products
             </Link>
           </div>
           <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-4">
-            {shopFeatured.map((p) => (
+            {shopFeatured.map((p, i) => (
               <Link
                 key={p.slug}
                 to={`/shop/${p.slug}`}
-                className="rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 hover:border-[var(--color-primary)] transition"
+                data-reveal
+                style={{ ['--i' as string]: i }}
+                className="card-lift rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 hover:border-[var(--color-primary)]"
               >
                 <div
                   className="h-40 bg-cover bg-center"
@@ -128,7 +134,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="max-w-6xl mx-auto px-5 py-16">
+      <section className="max-w-6xl mx-auto px-5 py-16" data-reveal>
         <div className="rounded-2xl bg-[var(--color-primary)] text-white p-10 md:p-14 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div>
             <h2 className="text-3xl font-semibold">Ready when you are.</h2>
@@ -139,7 +145,7 @@ export default function Home() {
           </div>
           <Link
             to="/book"
-            className="px-6 py-3 rounded-lg bg-white text-[var(--color-primary-dark)] font-semibold hover:bg-neutral-100"
+            className="px-6 py-3 rounded-lg bg-white text-[var(--color-primary-dark)] font-semibold hover:bg-neutral-100 transition"
           >
             Book now
           </Link>

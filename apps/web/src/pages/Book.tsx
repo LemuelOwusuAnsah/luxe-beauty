@@ -13,14 +13,13 @@ export default function Book() {
   const [email, setEmail] = useState('')
   const [serviceId, setServiceId] = useState('')
   const [date, setDate] = useState('')
-  const [message, setMessage] = useState('')
+  const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
 
   const today = new Date().toISOString().split('T')[0]
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault()
-    setMessage('')
     setError('')
 
     if (!serviceId) {
@@ -36,14 +35,13 @@ export default function Book() {
         serviceId: Number(serviceId),
         date,
       })
-      setMessage(
-        `Thanks ${name}, your booking request for ${date} has been received. We'll confirm shortly.`,
-      )
+      setSuccess(true)
       setName('')
       setPhone('')
       setEmail('')
       setServiceId('')
       setDate('')
+      setTimeout(() => setSuccess(false), 3000)
     } catch (err) {
       setError('Could not save booking. Please try again.')
       console.error(err)
@@ -73,8 +71,21 @@ export default function Book() {
 
         <form
           onSubmit={onSubmit}
-          className="rounded-2xl border border-neutral-200 dark:border-neutral-800 p-6 space-y-4 h-fit"
+          className="relative rounded-2xl border border-neutral-200 dark:border-neutral-800 p-6 space-y-4 h-fit overflow-hidden"
         >
+          {success && (
+            <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-white/95 dark:bg-[#0f1115]/95 backdrop-blur-sm animate-[fadeIn_200ms_ease-out]">
+              <div className="w-16 h-16 rounded-full bg-green-100 dark:bg-green-950/40 flex items-center justify-center">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </div>
+              <p className="mt-4 font-medium text-neutral-900 dark:text-neutral-100">
+                Your message has been sent successfully
+              </p>
+            </div>
+          )}
+
           <div>
             <label className="text-sm font-medium">Your name</label>
             <input
@@ -142,12 +153,6 @@ export default function Book() {
           >
             {createBooking.isPending ? 'Sending…' : 'Request booking'}
           </button>
-
-          {message && (
-            <p className="text-sm text-green-700 dark:text-green-400 bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-900 rounded-lg p-3">
-              {message}
-            </p>
-          )}
 
           {error && (
             <p className="text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900 rounded-lg p-3">

@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 export type CartProduct = {
+  id: number
   slug: string
   name: string
   price: number
@@ -9,6 +10,7 @@ export type CartProduct = {
 }
 
 export type CartItem = {
+  id: number
   slug: string
   name: string
   price: number
@@ -43,7 +45,7 @@ export const useCart = create<CartState>()(
           return {
             items: [
               ...state.items,
-              { slug: p.slug, name: p.name, price: p.price, image: p.image, qty },
+              { id: p.id, slug: p.slug, name: p.name, price: p.price, image: p.image, qty },
             ],
           }
         }),

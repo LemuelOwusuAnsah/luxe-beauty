@@ -144,7 +144,7 @@ export default function Layout() {
             <Link
               to="/cart"
               aria-label="Cart"
-              className="relative hidden lg:flex w-9 h-9 items-center justify-center text-neutral-800 dark:text-neutral-200 hover:text-[var(--color-primary)] transition"
+              className="relative flex w-9 h-9 items-center justify-center text-neutral-800 dark:text-neutral-200 hover:text-[var(--color-primary)] transition"
             >
               <IconCart />
               {cartCount > 0 && (
@@ -219,7 +219,7 @@ export default function Layout() {
         </div>
 
         {open && (
-          <div className="lg:hidden border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#0f1115]">
+          <div className="lg:hidden border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#0f1115] animate-[fadeIn_150ms_ease-out]">
             <div className="max-w-6xl mx-auto px-5 py-4 flex flex-col gap-1">
               {nav.map((item) => (
                 <Link key={item.to} to={item.to} onClick={close} className="px-3 py-3 rounded-lg text-sm font-medium text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-900">
@@ -234,6 +234,16 @@ export default function Layout() {
                 <span>Cart{cartCount > 0 ? ` (${cartCount})` : ""}</span>
               </Link>
 
+              <Link to="/book" onClick={close} className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-900">
+                <IconPhone />
+                <span>Book</span>
+              </Link>
+
+              <Link to="/checkout" onClick={close} className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-900">
+                <IconCart />
+                <span>Checkout</span>
+              </Link>
+
               <button onClick={toggle} className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-900 text-left">
                 {theme === "dark" ? <IconSun /> : <IconMoon />}
                 <span>{theme === "dark" ? "Light mode" : "Dark mode"}</span>
@@ -243,6 +253,13 @@ export default function Layout() {
                 <IconMail />
                 <span>Contact</span>
               </Link>
+
+              <Link to="/colophon" onClick={close} className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-900">
+                <IconMail />
+                <span>Colophon</span>
+              </Link>
+
+              <div className="h-px bg-neutral-200 dark:bg-neutral-800 my-2" />
 
               {current ? (
                 <>
@@ -258,7 +275,7 @@ export default function Layout() {
               ) : (
                 <Link to="/auth" onClick={close} className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium bg-[var(--color-primary)] text-white">
                   <IconUser />
-                  <span>Sign in</span>
+                  <span>Sign in / Sign up</span>
                 </Link>
               )}
             </div>

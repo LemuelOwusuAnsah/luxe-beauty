@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.104.0",
+    "jspdf": "^4.2.1",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "react-helmet-async": "^3.0.0",

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Link, useParams } from 'react-router-dom'
 import { seo } from '../lib/seo'
@@ -8,11 +9,13 @@ export default function ProductDetail() {
   const { slug } = useParams()
   const { data: product, isLoading, error } = useProduct(slug)
   const add = useCart((s) => s.add)
+  const [qty, setQty] = useState(1)
+  const [added, setAdded] = useState(false)
 
   if (isLoading) {
     return (
       <section className="max-w-3xl mx-auto px-5 py-24 text-center">
-        <p className="text-neutral-600 dark:text-neutral-300">Loading…</p>
+        <p className="text-neutral-700 dark:text-neutral-300">Loading…</p>
       </section>
     )
   }
@@ -32,6 +35,21 @@ export default function ProductDetail() {
         </Link>
       </section>
     )
+  }
+
+  function handleAdd() {
+    add(
+      {
+        id: product!.id,
+        slug: product!.slug,
+        name: product!.name,
+        price: Number(product!.price),
+        image: product!.image,
+      },
+      qty,
+    )
+    setAdded(true)
+    setTimeout(() => setAdded(false), 2000)
   }
 
   return (
@@ -75,19 +93,48 @@ export default function ProductDetail() {
               {product.stock} in stock
             </div>
 
+            <div className="mt-6">
+              <label className="text-sm font-medium block mb-2">Quantity</label>
+              <div className="inline-flex items-center border border-neutral-300 dark:border-neutral-700 rounded-lg overflow-hidden">
+                <button
+                  type="button"
+                  onClick={() => setQty((q) => Math.max(1, q - 1))}
+                  aria-label="Decrease quantity"
+                  className="w-10 h-10 flex items-center justify-center text-lg font-medium text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-900"
+                >
+                  −
+                </button>
+                <input
+                  type="number"
+                  min={1}
+                  value={qty}
+                  onChange={(e) => {
+                    const v = parseInt(e.target.value)
+                    setQty(isNaN(v) ? 1 : Math.max(1, v))
+                  }}
+                  className="w-16 text-center border-0 bg-transparent focus:outline-none text-neutral-900 dark:text-neutral-100"
+                />
+                <button
+                  type="button"
+                  onClick={() => setQty((q) => q + 1)}
+                  aria-label="Increase quantity"
+                  className="w-10 h-10 flex items-center justify-center text-lg font-medium text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-900"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+
             <div className="mt-8 flex flex-wrap gap-3">
               <button
-                onClick={() =>
-                  add({
-                    slug: product.slug,
-                    name: product.name,
-                    price: Number(product.price),
-                    image: product.image,
-                  })
-                }
-                className="px-6 py-3 rounded-lg bg-[var(--color-primary)] text-white font-medium hover:bg-[var(--color-primary-dark)]"
+                onClick={handleAdd}
+                className={`px-6 py-3 rounded-lg font-medium text-white transition ${
+                  added
+                    ? 'bg-green-600 hover:bg-green-600'
+                    : 'bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)]'
+                }`}
               >
-                Add to cart
+                {added ? 'Added' : 'Add to cart'}
               </button>
               <Link
                 to="/cart"
